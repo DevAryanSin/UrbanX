@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import {
   Activity,
   ArrowRight,
@@ -26,20 +27,43 @@ import { AnimatedCounter } from '@/components/landing/AnimatedCounter'
 import { FeatureCard } from '@/components/landing/FeatureCard'
 
 export default function LandingPage() {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <div className="min-h-screen bg-ink-950 text-white overflow-x-hidden">
+    <div className="landing-root min-h-screen bg-ink-950 text-white">
       {/* ═══════════════════════════════════════════════════════════════
-          NAVBAR
+          ANIMATED MAP BACKGROUND — fixed behind entire page
       ═══════════════════════════════════════════════════════════════ */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-ink-950/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="fixed inset-0 z-0">
+        <MapBackground />
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          NAVBAR — floats on scroll
+      ═══════════════════════════════════════════════════════════════ */}
+      <nav
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${
+          scrolled
+            ? 'bg-ink-950/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/40'
+            : 'bg-transparent border border-transparent rounded-none'
+        }`}
+        style={{ width: 'min(960px, calc(100vw - 2rem))' }}
+      >
+        <div className="px-5 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center">
               <Activity className="w-4 h-4 text-white" />
             </div>
             <span className="font-display font-bold text-lg text-white">UrbanX</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm text-ink-400">
+          <div className="hidden md:flex items-center gap-7 text-sm text-ink-400">
             <a href="#capabilities" className="hover:text-white transition-colors">Capabilities</a>
             <a href="#pipeline" className="hover:text-white transition-colors">Pipeline</a>
             <a href="#benchmarks" className="hover:text-white transition-colors">Benchmarks</a>
@@ -66,19 +90,17 @@ export default function LandingPage() {
       {/* ═══════════════════════════════════════════════════════════════
           HERO
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
-        <MapBackground />
-
+      <section className="relative z-10 h-screen min-h-[700px] flex items-center justify-center">
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 border border-brand-500/20 backdrop-blur px-4 py-1.5 text-xs font-medium text-brand-300 mb-8 animate-fade-in">
             <Zap className="w-3 h-3" />
-            AI-Powered · India-Specific · 100% Free
+            AI-Powered · Pedestrian-First Urban Redesign
           </div>
 
           {/* Headline */}
           <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] mb-6 animate-slide-up">
-            Transform Indian streets into
+            Transform any street into
             <br />
             <span className="bg-gradient-to-r from-brand-400 via-brand-300 to-accent-400 bg-clip-text text-transparent">
               pedestrian-friendly
@@ -130,7 +152,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Scroll indicator — positioned at bottom of hero */}
+        {/* Scroll indicator */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-bounce">
           <span className="text-[10px] text-ink-500 uppercase tracking-widest">Scroll</span>
           <div className="w-px h-8 bg-gradient-to-b from-ink-500 to-transparent" />
@@ -140,7 +162,7 @@ export default function LandingPage() {
       {/* ═══════════════════════════════════════════════════════════════
           CAPABILITIES
       ═══════════════════════════════════════════════════════════════ */}
-      <section id="capabilities" className="relative py-24 bg-ink-950">
+      <section id="capabilities" className="relative z-10 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-xs font-mono text-brand-400 uppercase tracking-widest">Capabilities</span>
@@ -148,7 +170,7 @@ export default function LandingPage() {
               Everything needed to redesign a street
             </h2>
             <p className="text-ink-400 max-w-xl mx-auto">
-              From detection to engineering drawings — a complete pipeline purpose-built for Indian urban conditions.
+              From detection to engineering drawings — a complete pedestrian infrastructure pipeline.
             </p>
           </div>
 
@@ -162,8 +184,8 @@ export default function LandingPage() {
             <FeatureCard
               step="02"
               icon={Eye}
-              title="India-Specific Vision"
-              description="YOLOv9 detects encroachments, potholes, open drains, auto-rickshaws, and broken sidewalks. LLaVA understands land use, street character, and infrastructure problems."
+              title="AI Vision Analysis"
+              description="YOLOv9 detects encroachments, potholes, open drains, and broken sidewalks. LLaVA understands land use, street character, and infrastructure problems."
             />
             <FeatureCard
               step="03"
@@ -181,7 +203,7 @@ export default function LandingPage() {
               step="05"
               icon={BarChart3}
               title="Prioritized Recommendations"
-              description="CRITICAL → LONG-TERM interventions with specific locations, Indian cost estimates, and per-meter BOQ breakdowns using schedule of rates."
+              description="CRITICAL → LONG-TERM interventions with specific locations, cost estimates, and per-meter BOQ breakdowns."
             />
             <FeatureCard
               step="06"
@@ -196,7 +218,7 @@ export default function LandingPage() {
       {/* ═══════════════════════════════════════════════════════════════
           PIPELINE
       ═══════════════════════════════════════════════════════════════ */}
-      <section id="pipeline" className="relative py-24 bg-gradient-to-b from-ink-950 via-ink-900 to-ink-950">
+      <section id="pipeline" className="relative z-10 py-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-xs font-mono text-brand-400 uppercase tracking-widest">Pipeline</span>
@@ -224,7 +246,7 @@ export default function LandingPage() {
                 }`}
               >
                 {/* Dot */}
-                <div className="absolute left-6 sm:left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand-500 ring-4 ring-ink-900 z-10" />
+                <div className="absolute left-6 sm:left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand-500 ring-4 ring-ink-950 z-10" />
 
                 {/* Content */}
                 <div className={`ml-14 sm:ml-0 sm:w-1/2 ${i % 2 === 0 ? 'sm:pr-12 sm:text-right' : 'sm:pl-12'}`}>
@@ -244,15 +266,15 @@ export default function LandingPage() {
       {/* ═══════════════════════════════════════════════════════════════
           BENCHMARKS
       ═══════════════════════════════════════════════════════════════ */}
-      <section id="benchmarks" className="relative py-24 bg-ink-950">
+      <section id="benchmarks" className="relative z-10 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-xs font-mono text-brand-400 uppercase tracking-widest">Benchmarks</span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-3 mb-4">
-              World-class standards, Indian context
+              World-class standards, global context
             </h2>
             <p className="text-ink-400 max-w-xl mx-auto">
-              UrbanX compares your streets against Copenhagen, Amsterdam, Tokyo, Barcelona, Singapore, and Seoul — then redesigns for Indian conditions.
+              UrbanX compares your streets against Copenhagen, Amsterdam, Tokyo, Barcelona, Singapore, and Seoul.
             </p>
           </div>
 
@@ -267,7 +289,7 @@ export default function LandingPage() {
             ].map((b) => (
               <div
                 key={b.city}
-                className="group rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] hover:border-brand-500/30 p-5 transition-all duration-300"
+                className="group rounded-2xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] hover:border-brand-500/30 p-5 transition-all duration-300 backdrop-blur-sm"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div>
@@ -293,7 +315,7 @@ export default function LandingPage() {
       {/* ═══════════════════════════════════════════════════════════════
           STANDARDS
       ═══════════════════════════════════════════════════════════════ */}
-      <section id="standards" className="relative py-24 bg-gradient-to-b from-ink-950 to-ink-900">
+      <section id="standards" className="relative z-10 py-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-xs font-mono text-brand-400 uppercase tracking-widest">Standards</span>
@@ -317,7 +339,7 @@ export default function LandingPage() {
             ].map((s) => (
               <div
                 key={s.code}
-                className="rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.06] hover:border-brand-500/20 p-4 text-center transition-all"
+                className="rounded-xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] hover:border-brand-500/20 p-4 text-center transition-all backdrop-blur-sm"
               >
                 <div className="font-mono text-xs text-brand-400 mb-1">{s.code}</div>
                 <div className="text-xs text-ink-400">{s.name}</div>
@@ -330,7 +352,7 @@ export default function LandingPage() {
       {/* ═══════════════════════════════════════════════════════════════
           FINAL CTA
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="relative py-24 bg-ink-900 overflow-hidden">
+      <section className="relative z-10 py-24 overflow-hidden">
         {/* Background glow */}
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-brand-500/10 blur-[120px]" />
@@ -368,7 +390,7 @@ export default function LandingPage() {
       {/* ═══════════════════════════════════════════════════════════════
           FOOTER
       ═══════════════════════════════════════════════════════════════ */}
-      <footer className="bg-ink-950 border-t border-white/5 py-10">
+      <footer className="relative z-10 border-t border-white/5 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center">
@@ -378,7 +400,7 @@ export default function LandingPage() {
             <span className="text-xs text-ink-500 ml-2">v0.1.0</span>
           </div>
           <p className="text-xs text-ink-500">
-            Built for safer, walkable, monsoon-resilient Indian cities · 100% free & open-source
+            Built for safer, walkable, monsoon-resilient cities · Open-source
           </p>
         </div>
       </footer>

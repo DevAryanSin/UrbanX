@@ -14,6 +14,26 @@ html, body {
 
 body {
   @apply bg-ink-50 text-ink-900 antialiased;
+  overscroll-behavior: none;
+}
+
+/* Prevent white edges / rubber-banding on force scroll */
+html, body {
+  overscroll-behavior: none;
+  background-color: #0e1014;
+}
+.landing-root {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.landing-root::-webkit-scrollbar {
+  display: none;
+}
+.landing-root {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @layer components {
@@ -66,8 +86,9 @@ body {
   z-index: 0;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { @apply bg-ink-50; }
-::-webkit-scrollbar-thumb { @apply bg-ink-200 rounded-full; }
-::-webkit-scrollbar-thumb:hover { @apply bg-ink-300; }
+/* Hide all scrollbars globally */
+::-webkit-scrollbar { display: none; }
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
