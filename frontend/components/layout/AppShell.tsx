@@ -17,7 +17,7 @@ import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
 const nav = [
-  { href: '/', label: 'Dashboard', icon: Home },
+  { href: '/dashboard', label: 'Dashboard', icon: Home },
   { href: '/analysis', label: 'New Analysis', icon: Upload },
   { href: '/map', label: 'Map', icon: MapIcon },
   { href: '/redesign', label: 'Redesign', icon: Activity },
@@ -28,6 +28,13 @@ const nav = [
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  // Landing page gets full-bleed layout — no sidebar, no container
+  const isLanding = pathname === '/'
+
+  if (isLanding) {
+    return <div className="min-h-screen bg-ink-950">{children}</div>
+  }
 
   return (
     <div className="min-h-screen bg-ink-50">
