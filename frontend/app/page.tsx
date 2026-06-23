@@ -9,10 +9,12 @@ import {
   BarChart3,
   Camera,
   ChevronRight,
+  Clock,
   Droplets,
   Eye,
   Footprints,
   Globe,
+  Layers,
   Leaf,
   MapPin,
   Rocket,
@@ -38,16 +40,12 @@ export default function LandingPage() {
 
   return (
     <div className="landing-root min-h-screen bg-ink-950 text-white">
-      {/* ═══════════════════════════════════════════════════════════════
-          ANIMATED MAP BACKGROUND — fixed behind entire page
-      ═══════════════════════════════════════════════════════════════ */}
+      {/* Animated map background */}
       <div className="fixed inset-0 z-0">
         <MapBackground />
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          NAVBAR — floats on scroll
-      ═══════════════════════════════════════════════════════════════ */}
+      {/* Navbar */}
       <nav
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${
           scrolled
@@ -64,6 +62,7 @@ export default function LandingPage() {
             <span className="font-display font-bold text-lg text-white">UrbanX</span>
           </div>
           <div className="hidden md:flex items-center gap-7 text-sm text-ink-400">
+            <a href="#modes" className="hover:text-white transition-colors">Modes</a>
             <a href="#capabilities" className="hover:text-white transition-colors">Capabilities</a>
             <a href="#pipeline" className="hover:text-white transition-colors">Pipeline</a>
             <a href="#benchmarks" className="hover:text-white transition-colors">Benchmarks</a>
@@ -87,18 +86,14 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          HERO
-      ═══════════════════════════════════════════════════════════════ */}
+      {/* Hero */}
       <section className="relative z-10 h-screen min-h-[700px] flex items-center justify-center">
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
-          {/* Badge */}
           <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 border border-brand-500/20 backdrop-blur px-4 py-1.5 text-xs font-medium text-brand-300 mb-8 animate-fade-in">
             <Zap className="w-3 h-3" />
             AI-Powered · Pedestrian-First Urban Redesign
           </div>
 
-          {/* Headline */}
           <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] mb-6 animate-slide-up">
             Transform any street into
             <br />
@@ -108,21 +103,19 @@ export default function LandingPage() {
             corridors
           </h1>
 
-          {/* Subheadline */}
           <p className="text-lg sm:text-xl text-ink-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-slide-up" style={{ animationDelay: '0.1s' }}>
             Upload a photo, drop coordinates, or pick a point on the map.
             UrbanX analyzes existing infrastructure against international benchmarks
             and generates an engineering-grade redesign — in seconds.
           </p>
 
-          {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up" style={{ animationDelay: '0.2s' }}>
             <Link
-              href="/dashboard"
+              href="#modes"
               className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white px-8 py-4 text-base font-semibold transition-all shadow-2xl shadow-brand-600/30 hover:shadow-brand-500/40 hover:-translate-y-0.5"
             >
               <Rocket className="w-5 h-5 group-hover:rotate-[-5deg] transition-transform" />
-              Launch Dashboard
+              Get Started
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
             <Link
@@ -134,7 +127,6 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          {/* Hero stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: '0.4s' }}>
             {[
               { value: 15000, suffix: '+', label: 'Pedestrian deaths / yr' },
@@ -152,10 +144,103 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-bounce">
           <span className="text-[10px] text-ink-500 uppercase tracking-widest">Scroll</span>
           <div className="w-px h-8 bg-gradient-to-b from-ink-500 to-transparent" />
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          MODE SELECTION — Express vs Detailed
+      ═══════════════════════════════════════════════════════════════ */}
+      <section id="modes" className="relative z-10 py-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-xs font-mono text-brand-400 uppercase tracking-widest">Choose Your Mode</span>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-3 mb-4">
+              Two ways to redesign
+            </h2>
+            <p className="text-ink-400 max-w-xl mx-auto">
+              Quick results or full analysis — pick the workflow that fits your needs.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Express Mode */}
+            <Link href="/express/upload" className="group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 hover:bg-white/[0.08] hover:border-brand-500/40 transition-all duration-500 hover:-translate-y-1">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-500 to-brand-400 rounded-t-2xl" />
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-600/10 border border-brand-500/30 flex items-center justify-center">
+                  <Zap className="w-6 h-6 text-brand-400" />
+                </div>
+                <div>
+                  <h3 className="font-display text-xl font-bold text-white">Express Mode</h3>
+                  <span className="text-xs font-mono text-brand-400">Quick Redesign</span>
+                </div>
+              </div>
+              <p className="text-ink-400 text-sm leading-relaxed mb-6">
+                Upload a street photo and get an instant pedestrian-friendly redesign.
+                No prompts, no instructions — the pre-trained model runs automatically.
+              </p>
+              <div className="space-y-2.5 mb-6">
+                {[
+                  { icon: Camera, text: 'Upload any phone photo' },
+                  { icon: Sparkles, text: 'Pre-trained model runs automatically' },
+                  { icon: TrendingUp, text: 'Generated pedestrian-friendly image' },
+                  { icon: Award, text: 'Export: GeoJSON, LandXML, PDF, PNG' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2.5 text-sm text-ink-300">
+                    <item.icon className="w-4 h-4 text-brand-400 shrink-0" />
+                    {item.text}
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 text-brand-400 font-semibold text-sm group-hover:gap-3 transition-all">
+                <Upload className="w-4 h-4" />
+                Upload Photo & Get Result
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </Link>
+
+            {/* Detailed Mode */}
+            <Link href="/detailed/input" className="group relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 hover:bg-white/[0.08] hover:border-accent-500/40 transition-all duration-500 hover:-translate-y-1">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent-500 to-accent-400 rounded-t-2xl" />
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-500/20 to-accent-600/10 border border-accent-500/30 flex items-center justify-center">
+                  <Layers className="w-6 h-6 text-accent-400" />
+                </div>
+                <div>
+                  <h3 className="font-display text-xl font-bold text-white">Detailed Mode</h3>
+                  <span className="text-xs font-mono text-accent-400">Full Analysis & Redesign</span>
+                </div>
+              </div>
+              <p className="text-ink-400 text-sm leading-relaxed mb-6">
+                Complete human-in-the-loop pipeline: grid-based area analysis,
+                pedestrian-vehicle interference detection, ML generation with SUMO simulation,
+                and LLM agent for iterative review.
+              </p>
+              <div className="space-y-2.5 mb-6">
+                {[
+                  { icon: MapPin, text: 'Upload aerial/street photo or select on map' },
+                  { icon: Eye, text: 'Grid-based interference detection pipeline' },
+                  { icon: BarChart3, text: 'Feature selection: crossings, markings, trees...' },
+                  { icon: Sparkles, text: 'ML generation + SUMO simulation validation' },
+                  { icon: Shield, text: 'LLM agent for human-in-the-loop review' },
+                  { icon: Award, text: 'Export with full metric measurements' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2.5 text-sm text-ink-300">
+                    <item.icon className="w-4 h-4 text-accent-400 shrink-0" />
+                    {item.text}
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 text-accent-400 font-semibold text-sm group-hover:gap-3 transition-all">
+                <Clock className="w-4 h-4" />
+                Start Full Analysis Pipeline
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -228,7 +313,6 @@ export default function LandingPage() {
           </div>
 
           <div className="relative">
-            {/* Vertical line */}
             <div className="absolute left-6 sm:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand-500/50 via-brand-500/20 to-transparent" />
 
             {[
@@ -245,10 +329,7 @@ export default function LandingPage() {
                   i % 2 === 0 ? 'sm:flex-row' : 'sm:flex-row-reverse'
                 }`}
               >
-                {/* Dot */}
                 <div className="absolute left-6 sm:left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand-500 ring-4 ring-ink-950 z-10" />
-
-                {/* Content */}
                 <div className={`ml-14 sm:ml-0 sm:w-1/2 ${i % 2 === 0 ? 'sm:pr-12 sm:text-right' : 'sm:pl-12'}`}>
                   <div className={`inline-flex items-center gap-2 ${i % 2 === 0 ? 'sm:ml-auto' : ''} mb-2`}>
                     <item.icon className="w-4 h-4 text-brand-400" />
@@ -353,7 +434,6 @@ export default function LandingPage() {
           FINAL CTA
       ═══════════════════════════════════════════════════════════════ */}
       <section className="relative z-10 py-24 overflow-hidden">
-        {/* Background glow */}
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-brand-500/10 blur-[120px]" />
         </div>
@@ -369,27 +449,25 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/dashboard"
+              href="/express/upload"
               className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white px-10 py-4 text-base font-semibold transition-all shadow-2xl shadow-brand-600/30 hover:-translate-y-0.5"
             >
-              <Rocket className="w-5 h-5 group-hover:rotate-[-5deg] transition-transform" />
-              Open Dashboard
+              <Zap className="w-5 h-5 group-hover:rotate-[-5deg] transition-transform" />
+              Express Mode
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
             <Link
-              href="/analysis"
+              href="/detailed/input"
               className="inline-flex items-center gap-2 rounded-xl border border-white/10 hover:border-white/20 text-white px-8 py-4 text-base font-semibold transition-all hover:-translate-y-0.5"
             >
-              <Sparkles className="w-5 h-5" />
-              Run Analysis
+              <Layers className="w-5 h-5" />
+              Detailed Mode
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          FOOTER
-      ═══════════════════════════════════════════════════════════════ */}
+      {/* Footer */}
       <footer className="relative z-10 border-t border-white/5 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
@@ -397,7 +475,7 @@ export default function LandingPage() {
               <Activity className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-display font-bold text-white">UrbanX</span>
-            <span className="text-xs text-ink-500 ml-2">v0.1.0</span>
+            <span className="text-xs text-ink-500 ml-2">v2.0.0</span>
           </div>
           <p className="text-xs text-ink-500">
             Built for safer, walkable, monsoon-resilient cities · Open-source

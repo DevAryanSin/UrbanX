@@ -13,70 +13,69 @@ html, body {
 }
 
 body {
-  @apply bg-ink-50 text-ink-900 antialiased;
+  @apply bg-ink-950 text-white/90 antialiased;
   overscroll-behavior: none;
+  background-color: #060709;
 }
 
-/* Prevent white edges / rubber-banding on force scroll */
-html, body {
-  overscroll-behavior: none;
-  background-color: #0e1014;
-}
 .landing-root {
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Hide scrollbar but keep scroll functionality */
-.landing-root::-webkit-scrollbar {
-  display: none;
-}
-.landing-root {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* Scrollbar — thin dark */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+* { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent; }
+
+::selection {
+  background: rgba(39,176,108,0.3);
+  color: #fff;
 }
 
 @layer components {
   .card {
-    @apply bg-white rounded-xl shadow-card border border-ink-100;
+    @apply bg-surface-100 rounded-xl shadow-card border border-white/[0.06];
   }
   .card-hover {
-    @apply card transition-all hover:shadow-elevated hover:-translate-y-0.5;
+    @apply card transition-all hover:border-white/[0.12] hover:shadow-elevated;
   }
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-primary {
-    @apply btn bg-brand-600 text-white hover:bg-brand-700 focus:ring-brand-500;
+    @apply btn bg-brand-600 text-white hover:bg-brand-500 shadow-lg shadow-brand-600/20;
   }
   .btn-secondary {
-    @apply btn bg-white text-ink-700 border border-ink-200 hover:bg-ink-50 focus:ring-ink-300;
+    @apply btn bg-white/[0.05] text-white/80 border border-white/[0.08] hover:bg-white/[0.1] hover:text-white;
   }
   .btn-ghost {
-    @apply btn text-ink-600 hover:bg-ink-100 focus:ring-ink-200;
+    @apply btn text-white/60 hover:bg-white/[0.06] hover:text-white/80;
   }
   .btn-danger {
-    @apply btn bg-critical text-white hover:bg-red-700 focus:ring-red-500;
+    @apply btn bg-critical text-white hover:bg-red-600 shadow-lg shadow-critical/20;
   }
   .input {
-    @apply w-full rounded-lg border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-all;
+    @apply w-full rounded-lg border border-white/[0.08] bg-surface-200 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-all;
   }
   .label {
-    @apply block text-sm font-medium text-ink-700 mb-1.5;
+    @apply block text-sm font-medium text-white/70 mb-1.5;
   }
   .badge {
     @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
   }
-  .badge-critical { @apply badge bg-red-100 text-red-700; }
-  .badge-high { @apply badge bg-orange-100 text-orange-700; }
-  .badge-medium { @apply badge bg-yellow-100 text-yellow-700; }
-  .badge-low { @apply badge bg-blue-100 text-blue-700; }
-  .badge-success { @apply badge bg-green-100 text-green-700; }
+  .badge-critical { @apply badge bg-red-500/10 text-red-400 border border-red-500/20; }
+  .badge-high { @apply badge bg-orange-500/10 text-orange-400 border border-orange-500/20; }
+  .badge-medium { @apply badge bg-yellow-500/10 text-yellow-400 border border-yellow-500/20; }
+  .badge-low { @apply badge bg-blue-500/10 text-blue-400 border border-blue-500/20; }
+  .badge-success { @apply badge bg-green-500/10 text-green-400 border border-green-500/20; }
   .section-title {
-    @apply font-display text-xl font-semibold text-ink-900;
+    @apply font-display text-lg font-semibold text-white/90;
   }
   .section-subtitle {
-    @apply text-sm text-ink-500 mt-1;
+    @apply text-sm text-white/40 mt-1;
   }
 }
 
@@ -84,11 +83,4 @@ html, body {
 .leaflet-container {
   @apply h-full w-full rounded-xl;
   z-index: 0;
-}
-
-/* Hide all scrollbars globally */
-::-webkit-scrollbar { display: none; }
-* {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }

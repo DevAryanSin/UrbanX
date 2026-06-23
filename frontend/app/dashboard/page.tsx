@@ -7,17 +7,14 @@ import {
   Droplets,
   Eye,
   Footprints,
+  Layers,
   Leaf,
-  MapPin,
   Shield,
   TrendingUp,
-  Upload,
   Zap,
 } from 'lucide-react'
 import { useAppStore } from '@/lib/store'
 import { ScoreRing } from '@/components/analysis/ScoreRing'
-import { StatCard } from '@/components/ui/StatCard'
-import { QuickActions } from '@/components/ui/QuickActions'
 
 export default function DashboardPage() {
   const history = useAppStore((s) => s.history)
@@ -26,42 +23,75 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8">
       {/* Hero */}
-      <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-ink-900 via-ink-800 to-ink-900 text-white p-8 lg:p-10">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-brand-500 blur-3xl" />
-          <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-accent-500 blur-3xl" />
+      <section className="relative overflow-hidden rounded-2xl bg-surface-100 border border-white/[0.06] p-8 lg:p-10">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-brand-500 blur-[120px]" />
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-accent-500 blur-[120px]" />
         </div>
         <div className="relative max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-3 py-1 text-xs font-medium mb-4">
-            <Zap className="w-3 h-3 text-accent-400" />
+          <div className="inline-flex items-center gap-2 rounded-full bg-brand-500/10 border border-brand-500/20 px-3 py-1 text-xs font-medium text-brand-400 mb-4">
+            <Zap className="w-3 h-3" />
             AI-Powered · India-Specific · 100% Free
           </div>
-          <h1 className="font-display text-3xl lg:text-4xl font-bold leading-tight mb-3">
+          <h1 className="font-display text-3xl lg:text-4xl font-bold leading-tight mb-3 text-white">
             Transform Indian streets into
             <span className="text-brand-400"> pedestrian-friendly </span>
             corridors
           </h1>
-          <p className="text-ink-300 text-base lg:text-lg mb-6 leading-relaxed">
-            Upload a photo, drop coordinates, or pick a point on the map. UrbanX analyzes
-            existing infrastructure against international benchmarks and generates an
-            engineering-grade redesign — in seconds.
+          <p className="text-white/50 text-base lg:text-lg mb-6 leading-relaxed">
+            Upload a photo for instant redesign, or run the full analysis pipeline with
+            grid-based interference detection, ML generation, and human-in-the-loop review.
           </p>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/analysis"
-              className="inline-flex items-center gap-2 rounded-lg bg-brand-500 hover:bg-brand-400 text-white px-5 py-3 text-sm font-semibold transition-all shadow-lg shadow-brand-500/25"
-            >
-              <Upload className="w-4 h-4" />
-              Start New Analysis
-            </Link>
-            <Link
-              href="/map"
-              className="inline-flex items-center gap-2 rounded-lg bg-white/10 hover:bg-white/20 backdrop-blur text-white px-5 py-3 text-sm font-semibold transition-all border border-white/10"
-            >
-              <MapPin className="w-4 h-4" />
-              Pick on Map
-            </Link>
-          </div>
+        </div>
+      </section>
+
+      {/* Mode cards */}
+      <section>
+        <h2 className="section-title mb-4">Choose Mode</h2>
+        <div className="grid md:grid-cols-2 gap-4">
+          <Link href="/express/upload" className="group card-hover p-6 relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-500 to-brand-400" />
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center">
+                <Zap className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-white">Express Mode</h3>
+                <span className="text-xs font-mono text-brand-400">Quick Redesign</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-brand-400 group-hover:translate-x-0.5 ml-auto transition-all" />
+            </div>
+            <p className="text-sm text-white/50 mb-3">
+              Upload a street photo, get instant pedestrian-friendly redesign. Pre-trained model runs automatically.
+            </p>
+            <div className="flex gap-2">
+              {['Photo Upload', 'Auto Process', '4 Exports'].map((tag) => (
+                <span key={tag} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20">{tag}</span>
+              ))}
+            </div>
+          </Link>
+
+          <Link href="/detailed/input" className="group card-hover p-6 relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent-500 to-accent-400" />
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-lg bg-accent-500/10 border border-accent-500/20 text-accent-400 flex items-center justify-center">
+                <Layers className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-white">Detailed Mode</h3>
+                <span className="text-xs font-mono text-accent-400">Full Analysis & Redesign</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-accent-400 group-hover:translate-x-0.5 ml-auto transition-all" />
+            </div>
+            <p className="text-sm text-white/50 mb-3">
+              6-step pipeline: grid analysis, interference detection, ML generation, SUMO simulation, LLM review.
+            </p>
+            <div className="flex gap-2 flex-wrap">
+              {['Grid Analysis', 'Feature Selection', 'SUMO Sim', 'LLM Agent'].map((tag) => (
+                <span key={tag} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-accent-500/10 text-accent-400 border border-accent-500/20">{tag}</span>
+              ))}
+            </div>
+          </Link>
         </div>
       </section>
 
@@ -74,10 +104,10 @@ export default function DashboardPage() {
           </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard icon={Footprints} label="Walkability" value="0–100" hint="Sidewalk · crossings · shade" />
-          <StatCard icon={Shield} label="Safety" value="Vision Zero" hint="Speed · conflict points" />
-          <StatCard icon={Droplets} label="Monsoon Ready" value="Drainage" hint="Covered · permeable" />
-          <StatCard icon={Leaf} label="Green Cover" value="Canopy %" hint="Native · 8m spacing" />
+          <div className="card-hover p-5"><div className="flex items-center gap-2.5 mb-3"><div className="w-9 h-9 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center"><Footprints className="w-4 h-4" /></div><span className="text-sm font-medium text-white/60">Walkability</span></div><div className="font-display text-2xl font-bold text-white mb-0.5">0–100</div><p className="text-xs text-white/30">Sidewalk · crossings · shade</p></div>
+          <div className="card-hover p-5"><div className="flex items-center gap-2.5 mb-3"><div className="w-9 h-9 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center"><Shield className="w-4 h-4" /></div><span className="text-sm font-medium text-white/60">Safety</span></div><div className="font-display text-2xl font-bold text-white mb-0.5">Vision Zero</div><p className="text-xs text-white/30">Speed · conflict points</p></div>
+          <div className="card-hover p-5"><div className="flex items-center gap-2.5 mb-3"><div className="w-9 h-9 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center"><Droplets className="w-4 h-4" /></div><span className="text-sm font-medium text-white/60">Monsoon Ready</span></div><div className="font-display text-2xl font-bold text-white mb-0.5">Drainage</div><p className="text-xs text-white/30">Covered · permeable</p></div>
+          <div className="card-hover p-5"><div className="flex items-center gap-2.5 mb-3"><div className="w-9 h-9 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center"><Leaf className="w-4 h-4" /></div><span className="text-sm font-medium text-white/60">Green Cover</span></div><div className="font-display text-2xl font-bold text-white mb-0.5">Canopy %</div><p className="text-xs text-white/30">Native · 8m spacing</p></div>
         </div>
       </section>
 
@@ -89,17 +119,14 @@ export default function DashboardPage() {
               <h2 className="section-title">Latest Analysis</h2>
               <p className="section-subtitle truncate max-w-md">{latest.location.address}</p>
             </div>
-            <Link
-              href={`/report/${latest.id}`}
-              className="text-sm font-medium text-brand-600 hover:text-brand-700 inline-flex items-center gap-1"
-            >
+            <Link href="/report" className="text-sm font-medium text-brand-400 hover:text-brand-300 inline-flex items-center gap-1">
               View full report <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
           <div className="grid lg:grid-cols-3 gap-4">
             <div className="card p-6 flex flex-col items-center justify-center">
               <ScoreRing score={latest.scores.overall} size={140} />
-              <div className="mt-3 text-sm font-medium text-ink-600">Overall Score</div>
+              <div className="mt-3 text-sm font-medium text-white/60">Overall Score</div>
             </div>
             <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-3">
               <ScoreTile label="Walkability" score={latest.scores.walkability} />
@@ -128,16 +155,51 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <QuickActions />
+      {/* Quick Actions */}
+      <section>
+        <h2 className="section-title mb-4">Quick Actions</h2>
+        <div className="grid sm:grid-cols-3 gap-4">
+          <Link href="/express/upload" className="card-hover p-5 group">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-10 h-10 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center">
+                <Zap className="w-5 h-5" />
+              </div>
+              <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-brand-400 group-hover:translate-x-0.5 transition-all" />
+            </div>
+            <h3 className="font-display font-semibold text-white mb-1">Express Redesign</h3>
+            <p className="text-sm text-white/40">Upload photo, get instant result</p>
+          </Link>
+          <Link href="/detailed/input" className="card-hover p-5 group">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-10 h-10 rounded-lg bg-accent-500/10 border border-accent-500/20 text-accent-400 flex items-center justify-center">
+                <Layers className="w-5 h-5" />
+              </div>
+              <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-accent-400 group-hover:translate-x-0.5 transition-all" />
+            </div>
+            <h3 className="font-display font-semibold text-white mb-1">Full Pipeline</h3>
+            <p className="text-sm text-white/40">Grid analysis → ML → SUMO → Review</p>
+          </Link>
+          <Link href="/map" className="card-hover p-5 group">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center">
+                <Eye className="w-5 h-5" />
+              </div>
+              <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-purple-400 group-hover:translate-x-0.5 transition-all" />
+            </div>
+            <h3 className="font-display font-semibold text-white mb-1">Map View</h3>
+            <p className="text-sm text-white/40">Pick location on interactive map</p>
+          </Link>
+        </div>
+      </section>
     </div>
   )
 }
 
 function ScoreTile({ label, score }: { label: string; score: number }) {
   return (
-    <div className="rounded-lg bg-ink-50 border border-ink-100 p-3">
-      <div className="text-xs text-ink-500 mb-1">{label}</div>
-      <div className="font-display text-2xl font-bold text-ink-900">{score}</div>
+    <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] p-3">
+      <div className="text-xs text-white/40 mb-1">{label}</div>
+      <div className="font-display text-2xl font-bold text-white">{score}</div>
     </div>
   )
 }
@@ -146,13 +208,13 @@ function CapabilityCard({ step, title, description, icon: Icon }: { step: string
   return (
     <div className="card-hover p-6">
       <div className="flex items-center gap-3 mb-3">
-        <div className="w-10 h-10 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center">
           <Icon className="w-5 h-5" />
         </div>
-        <span className="text-xs font-mono text-ink-400">{step}</span>
+        <span className="text-xs font-mono text-white/30">{step}</span>
       </div>
-      <h3 className="font-display font-semibold text-ink-900 mb-1.5">{title}</h3>
-      <p className="text-sm text-ink-500 leading-relaxed">{description}</p>
+      <h3 className="font-display font-semibold text-white mb-1.5">{title}</h3>
+      <p className="text-sm text-white/40 leading-relaxed">{description}</p>
     </div>
   )
 }

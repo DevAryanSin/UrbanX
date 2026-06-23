@@ -1,6 +1,6 @@
 'use client'
 
-import { cn, scoreRingColor } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 
 export function ScoreRing({
   score,
@@ -23,9 +23,8 @@ export function ScoreRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="currentColor"
+          stroke="rgba(255,255,255,0.06)"
           strokeWidth={strokeWidth}
-          className="text-ink-100"
         />
         <circle
           cx={size / 2}
@@ -40,9 +39,16 @@ export function ScoreRing({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-display text-3xl font-bold text-ink-900">{score}</span>
-        <span className="text-[10px] text-ink-400 uppercase tracking-wider">/ 100</span>
+        <span className="font-display text-3xl font-bold text-white">{score}</span>
+        <span className="text-[10px] text-white/30 uppercase tracking-wider">/ 100</span>
       </div>
     </div>
   )
+}
+
+function scoreRingColor(score: number) {
+  if (score >= 80) return 'stroke-success'
+  if (score >= 60) return 'stroke-brand-500'
+  if (score >= 40) return 'stroke-warning'
+  return 'stroke-critical'
 }

@@ -9,15 +9,14 @@ const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
 export const metadata: Metadata = {
   title: 'UrbanX — AI-Powered Pedestrian-Friendly Urban Redesign',
-  description:
-    'Analyze Indian city streets and generate pedestrian-friendly redesigns meeting international standards. Built for safer, walkable, monsoon-resilient cities.',
+  description: 'Analyze Indian city streets and generate pedestrian-friendly redesigns meeting international standards. Built for safer, walkable, monsoon-resilient cities.',
   keywords: ['urban planning', 'pedestrian', 'Indian cities', 'street redesign', 'accessibility', 'Vision Zero'],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${space.variable} ${mono.variable}`}>
-      <body>
+      <body className="bg-ink-950">
         <AppShell>{children}</AppShell>
       </body>
     </html>
